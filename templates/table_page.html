@@ -1,0 +1,259 @@
+<!doctype html>
+<title>qqha</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Check_list</title>
+    <style type="text/css">
+        TABLE {
+            width: 100%;
+            border: 1px solid #399;
+            border-spacing: 7px 5px;
+        }
+
+        TD {
+            background: #f5f5f5;
+            border: 1px solid #333;
+            padding: 4px;
+        }
+
+        H1 {
+            display: inline-flex;
+            position: center;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            left: 50%;
+        }
+
+        mark {
+            background: #b0ff82;
+            padding: 0 0px;
+            border: 0px dashed #333;
+        }
+
+
+        .container {
+            height: 50px;
+            position: relative;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .b_button {
+            display: inline;
+            border-radius: 4px;
+            background-color: #d2d8d6;
+            border: None;
+            color: #000000;
+            text-align: center;
+            font-size: 20px;
+            padding: 10px;
+            width: 50px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .rm_button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #ffac77;
+            border: None;
+            color: #fdfcfc;
+            text-align: center;
+            font-size: 12px;
+            padding: 10px;
+            width: 50px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .add_button {
+            width: 90%;
+            display: block;
+            position: center;
+            border-radius: 4px;
+            background-color: #bfc0be;
+            border: None;
+            color: #000000;
+            text-align: center;
+            font-size: 20px;
+            padding: 10px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #94b985;
+            border: None;
+            color: #fdfcfc;
+            text-align: center;
+            font-size: 18px;
+            padding: 20px;
+            width: 100px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        input[type=text] {
+            width: 100%;
+            word-break: break-word;
+            box-sizing: border-box;
+        }
+
+        input[type=text]:focus {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: lightblue;
+        }
+
+        textarea {
+            font-size: 18px;
+            width: 100%;
+            height: auto;
+            padding: 1px 1px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            resize: none;
+        }
+
+        .good {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #00f17a;
+        }
+
+        .fail {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #ff7f91;
+        }
+
+        .na {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #fcffff;
+        }
+
+        th {
+            width: auto;
+            height: auto;
+        }
+
+    </style>
+</head>
+
+<form action="{{ url_for('update') }}" method="POST">
+    <button class="b_button" type="submit" id="back" style="vertical-align:middle" name="back_btn"
+            value="True"><=
+    </button>
+
+    <h1>{{table_name}}</h1>
+    <table border="1">
+        <input type="hidden" name="fl_name" value="{{fl_name}}"/>
+        <tr>
+            <th>id</th>
+            {% for c in columns %}
+            <th>{{c}}</th>
+            {% endfor %}
+        </tr>
+
+        {% for line in lines %}
+        <tr>
+            {% for k,v in line.items() %}
+            {% if k == 'id' %}
+            <td align="center" style="width: 1%">
+                <label name="{{k}}-@@@-{{line['id']}}" style="position: center">{{v}}</label>
+            </td>
+
+            {% elif k == 'result' %}
+            <td style="width: 10%">
+                <select name="{{k}}-@@@-{{line['id']}}"
+                        onchange="this.className=this.options[this.selectedIndex].className"
+                        class="{{v}}">
+                    <option selected="selected">{{v}}</option>
+                    <option class="good" value="good">good</option>
+                    <option class="fail" value="fail">fail</option>
+                    <option class="na" value="na">n/a</option>
+                </select>
+            </td>
+
+            {% elif k == 'link' %}
+            <td style="width: 10%">
+                <input type="text" name="{{k}}-@@@-{{line['id']}}" value="{{v}}">
+            </td>
+
+            {% else %}
+            <td>
+                <textarea rows="3" name="{{k}}-@@@-{{line['id']}}">{{v}}</textarea>
+            </td>
+            {% endif %}
+            {% endfor %}
+            <td style="width: 1%">
+                <button class="rm_button" type="submit" id="rm_row" style="vertical-align:middle"
+                        name="@rm_row--{{line['id']}}" value="True">del
+                </button>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+    <div class="container">
+        <div class="center">
+            <button class="add_button" type="submit" id="add_rows" style="vertical-align:middle" name="new_row"
+                    value="True">+
+            </button>
+        </div>
+    </div>
+    <button class="button" type="submit" id="submit_rows" style="vertical-align:middle">Save</button>
+
+</form>

@@ -1,0 +1,79 @@
+<!doctype html>
+<title>qqha</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>QQHA</title>
+    <style type="text/css">
+        H1 {
+            text-align: center;
+        }
+
+        H3 {
+            text-align: center;
+        }
+
+        .clr {
+            color: #99000c;
+        }
+
+        .file_list {
+            position: relative;
+            background-color: #333333;
+            display: block;
+            margin-right: auto;
+            margin-left: 30%;
+            text-align: left;
+            font-size: 16px;
+            padding: 5px;
+            width: 800px;
+            height: 20px;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .btn {
+            position: relative;
+            background-color: #333333;
+            display: inline;
+            margin-right: auto;
+            margin-left: 30%;
+            text-align: left;
+            font-size: 16px;
+            padding: 0px;
+            width: 48px;
+            height: 20px;
+            color: #ffffff;
+            margin-top: -1px;
+        }
+
+        .btnline {
+            position: relative;
+            background-color: #333333;
+            display: inline;
+            margin-right: auto;
+            margin-left: 0%;
+            text-align: left;
+            font-size: 16px;
+            padding: 0px;
+            width: 45px;
+            height: 20px;
+            color: #ffffff;
+            margin-top: -1px;
+        }
+    </style>
+</head>
+<!--QQHA-->
+<h1><span class="clr">QQHA</span></h1>
+<h3><span class="clr">Q</span>A <span class="clr">q</span>uick <span class="clr">h</span>elper <span
+        class="clr">a</span>pplication </h3>
+
+
+{% for fl in fl_list %}
+<label class="file_list" name="fl_list">{{fl}}</label>
+<form method="post" >
+<input type="submit" class="btn" name="BTN" value="Open file {{fl}}">
+<input type="submit" class="btnline" name="BTN" value="Copy file {{fl}}">
+<input type="submit" class="btnline" name="BTN" value="Delete file {{fl}}">
+</form>
+{% endfor %}
+
